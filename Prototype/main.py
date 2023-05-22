@@ -4,7 +4,7 @@ def signup():
 
     loginkey = input("Create key: ")
 
-    file = open("key.txt", "a")
+    file = open("./Prototype/key.txt", "a")
 
     file.write(loginkey)
     file.close()
@@ -14,7 +14,7 @@ def signup():
 def login():
     askkey = input("Key: ")
 
-    with open("key.txt", "r") as file:
+    with open("./Prototype/key.txt", "r") as file:
         key = {}
         for line in file:
             if line.strip() == askkey:
@@ -25,7 +25,7 @@ def login():
         resetkey()
 
 def resetkey():
-    os.remove("key.txt")
+    os.remove("./Prototype/key.txt")
     signup()
 
 def start():
@@ -34,7 +34,7 @@ def start():
     if result == "create":
         create()
     elif result == "request":
-        if os.path.getsize("data.txt") == 0:
+        if os.path.getsize("./Prototype/data.txt") == 0:
             print("File is empty")
         else:
             request()
@@ -48,7 +48,7 @@ def create():
 
     data = [username, password]
 
-    file = open("data.txt", "a")
+    file = open("./Prototype/data.txt", "a")
 
     file.write(f"\n{site} {data}")
     file.close()
@@ -60,7 +60,7 @@ def create():
 def request():
     request = input("What Site: ").capitalize()
     try:
-        with open("data.txt", "r") as file:
+        with open("./Prototype/data.txt", "r") as file:
             first_words = []
             next(file)
             for line in file:
@@ -69,7 +69,7 @@ def request():
                     first_words.append(words[0])
 
         if request in first_words:
-            with open("data.txt") as file:
+            with open("./Prototype/data.txt") as file:
                 for line in file:
                     if request in line:
                         print(line.strip())
@@ -84,11 +84,10 @@ def request():
         exit()
 
 
-open("key.txt", "a")
-open("data.txt", "a")
+open("./Prototype/key.txt", "a")
+open("./Prototype/data.txt", "a")
 
-
-if os.path.getsize("key.txt") == 0:
+if os.path.getsize("./Prototype/key.txt") == 0:
     signup()
 else:
     login()
